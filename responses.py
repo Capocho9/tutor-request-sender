@@ -3,22 +3,34 @@ from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-def get_service(api_name, api_version, scopes, key_file_location):
-    """Get a service that communicates to a Google API.
+# readability variable
+credentials_file = "valid-micron-453004-t0-10eb96d1c336.json"
+
+# readability variable
+scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+
+def get_sheet_data():
+
+  # defines the credentials as an object drawing from a service account file, it uses my file, and my specified scope
+  credentials = Credentials.from_service_account_file(credentials_file, scopes=scopes)
+  
+  service = build('sheets', 'v4', credentials = credentials)
+  
+  spreadsheet_id = '1FQLQOPDYSjrC9ouPKXIGYEie4jtzRTa_23K6WZ4sAG8'
+  
+  range_name = "NHS!A1:D100"
+  
+  try:
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId = spreadsheet_id, range = range_name).execute()
+    values = result.get('values',[])
+  
+    if not values:
+      print('No data found.')
     
-    Args:
-        api_name: The name of the api to connect to.
-        api_version: The api version to connect to.
-        scopes: A list of scopes needed for the service.
-        key_file_location: The path to a valid service account JSON key file.
-        
-    Returns:
-        A service that is connected to the specified API.
-    """
-    credentials = Credentials.from_service_account_file(
-        key_file_location, scopes=scopes)
-
-    # Build the service object.
-    service = build(api_name, api_version, credentials=credentials)
-
-    return service
+    else:
+      for row in values:
+        print(f'Subject: {row[0]}, Level: {row[1]}, Availablity: {row[2]}')
+  
+  except HttpError as error:
+    print(f'An error occurred: {error}')
