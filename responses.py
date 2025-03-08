@@ -18,7 +18,7 @@ def get_sheet_data():
   
   spreadsheet_id = '1FQLQOPDYSjrC9ouPKXIGYEie4jtzRTa_23K6WZ4sAG8'
   
-  range_name = "'NHS'!A1:D1"
+  range_name = "test!A2:D2"
   
   try:
     sheet = service.spreadsheets()
