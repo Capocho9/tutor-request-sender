@@ -18,7 +18,7 @@ def get_sheet_data():
   
   spreadsheet_id = '1FQLQOPDYSjrC9ouPKXIGYEie4jtzRTa_23K6WZ4sAG8'
   
-  range_name = "test!A2:D2"
+  range_name = "'test'!A2:D2"  # Adding quotes around sheet name
   
   try:
     sheet = service.spreadsheets()
@@ -32,5 +32,24 @@ def get_sheet_data():
       for row in values:
         print(f'Subject: {row[0]}, Level: {row[1]}, Availablity: {row[2]}')
   
+  except HttpError as error:
+    print(f'An error occurred: {error}')
+
+
+def list_sheet_names():
+  credentials = Credentials.from_service_account_file(credentials_file, scopes=scopes)
+  service = build('sheets', 'v4', credentials=credentials)
+  
+  spreadsheet_id = '1FQLQOPDYSjrC9ouPKXIGYEie4jtzRTa_23K6WZ4sAG8'
+  
+  try:
+    sheet_metadata = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    sheets = sheet_metadata.get('sheets', '')
+    
+    print("Available sheets:")
+    for sheet in sheets:
+      title = sheet.get("properties", {}).get("title", "")
+      print(f"- {title}")
+      
   except HttpError as error:
     print(f'An error occurred: {error}')
