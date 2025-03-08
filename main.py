@@ -1,9 +1,10 @@
 from flask import Flask
-from responses import get_sheet_data
+from handler import get_sheet_data
 
 app = Flask(__name__)
 
 @app.route('/')
+
 def home():
 
     get_sheet_data()
