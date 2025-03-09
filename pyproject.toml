@@ -1,6 +1,6 @@
 
 [project]
-name = "python-template"
+name = "nhs-tutoring-request-system"
 version = "0.1.0"
 description = ""
 authors = ["Adam Homicz <ajhomicz@gmail.com>"]
