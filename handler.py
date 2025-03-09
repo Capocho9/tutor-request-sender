@@ -7,7 +7,7 @@ from sender import contact_tutors
 from finder import find_tutors
 
 # readability variable
-credentials_file = os.environ.get('google_creds')
+credentials_file = /etc/secrets/google_creds
 
 # readability variable
 scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly']
