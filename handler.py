@@ -7,7 +7,7 @@ from sender import contact_tutors
 from finder import find_tutors
 
 # readability variable
-credentials_file = "valid-micron-453004-t0-10eb96d1c336.json"
+credentials_file = os.environ.get('google_creds')
 
 # readability variable
 scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly']
